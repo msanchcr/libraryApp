@@ -6,9 +6,9 @@ import org.unir.core.dto.Borrow;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@SuppressWarnings({"FieldCanBeLocal", "SpellCheckingInspection"})
 public class BorrowView extends JFrame {
 
     private static BorrowView instance;
@@ -109,7 +109,7 @@ public class BorrowView extends JFrame {
         borrowDaysPanel.add(borrowDaysLabel);
 
         BorrowBuilder builder = BorrowBuilder.getInstance();
-        daysToBorrow = new JComboBox ();
+        daysToBorrow = new JComboBox<>();
         for (int i: builder.getAllowedDays()) {
             daysToBorrow.addItem(i);
         }
@@ -142,12 +142,12 @@ public class BorrowView extends JFrame {
         submitButton = new JButton();
         submitButton.setText(SUBMIT);
         actionPanel.add(submitButton);
-        this.submitButton.addActionListener( e -> { submit(); });
+        this.submitButton.addActionListener( e -> submit());
 
         clearButton = new JButton();
         clearButton.setText(CLEAR);
         actionPanel.add(clearButton);
-        this.clearButton.addActionListener( e -> { clear(); });
+        this.clearButton.addActionListener( e -> clear());
     }
 
     public static BorrowView getInstance() {
