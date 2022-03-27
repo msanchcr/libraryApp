@@ -1,10 +1,12 @@
 package org.unir.core.dto;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Borrow {
 
     private final static String NO_COMMENT = "No comment";
+    private final static String DATE_FORMAT = "dd/MM/yyyy";
 
     private final String idBook;
     private final String idReader;
@@ -42,11 +44,12 @@ public class Borrow {
 
     @Override
     public String toString() {
+        SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
         return "Borrow{" +
                 "idBook='" + idBook + '\'' +
                 ", idReader='" + idReader + '\'' +
-                ", borrowDate=" + borrowDate +
-                ", borrowEndDate=" + borrowEndDate +
+                ", borrowDate=" + formatter.format(borrowDate) +
+                ", borrowEndDate=" + formatter.format(borrowEndDate) +
                 ", comment='" + comment + '\'' +
                 '}';
     }

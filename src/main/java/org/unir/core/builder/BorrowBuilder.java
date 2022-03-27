@@ -107,4 +107,8 @@ public class BorrowBuilder {
         }
         return instance;
     }
+
+    public int[] getAllowedDays () {
+        return allowedBorrowDates.clone();
+    }
 }

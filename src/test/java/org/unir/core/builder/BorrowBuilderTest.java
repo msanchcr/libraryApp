@@ -110,4 +110,12 @@ public class BorrowBuilderTest {
         endDate = borrow.getBorrowEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         Assert.assertEquals(startDate.until(endDate).getDays(), 30);
     }
+
+    @Test
+    public void cloneArrayTest () {
+        int[] str1 = builder.getAllowedDays();
+        int[] str2 = builder.getAllowedDays();
+        Assert.assertEquals(str1.length, str2.length);
+        Assert.assertNotEquals(str1.hashCode(), str2.hashCode());
+    }
 }
