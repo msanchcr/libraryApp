@@ -169,35 +169,19 @@ public class BorrowView extends JFrame {
         LOGGER.fine("About to submit form.");
         BorrowBuilder builder = BorrowBuilder.getInstance();
         try {
+            int input = 0;
             if (requestConfirmationCheck.isSelected()) {
                 LOGGER.fine("About to borrow book with confirmation.");
-                int input = JOptionPane.showConfirmDialog(
+                input = JOptionPane.showConfirmDialog(
                         null,
                         "Do you want to borrow this book?",
                         "Borrow confirmation",
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE
                 );
-                if (input == 0) {
-                    LOGGER.info("Borrow has been confirmed.");
-                    Borrow borrow = builder.build(new String[] {
-                            this.bookIdField.getText(),
-                            this.borrowerIdField.getText(),
-                            this.borrowDateField.getText(),
-                            "1",
-                            this.commentArea.getText()
-                    });
-                    LOGGER.info(
-                            String.format(
-                                    "A new book has been borrowed --> %s",
-                                    borrow.toString()
-                            )
-                    );
-                } else {
-                    LOGGER.info("Borrow has been cancelled.");
-                }
-            } else {
-                LOGGER.fine("About to borrow book without confirmation.");
+            }
+            if (input == 0) {
+                LOGGER.fine("About to borrow book confirmation.");
                 Borrow borrow = builder.build(new String[] {
                         this.bookIdField.getText(),
                         this.borrowerIdField.getText(),
@@ -210,6 +194,12 @@ public class BorrowView extends JFrame {
                                 "A new book has been borrowed --> %s",
                                 borrow.toString()
                         )
+                );
+                JOptionPane.showMessageDialog(
+                        null,
+                        borrow.toString(),
+                        "A new book has been borrowed.",
+                        JOptionPane.INFORMATION_MESSAGE
                 );
             }
         } catch (IllegalArgumentException ex) {
