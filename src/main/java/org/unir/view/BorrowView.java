@@ -6,9 +6,9 @@ import org.unir.core.dto.Borrow;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@SuppressWarnings({"FieldCanBeLocal", "SpellCheckingInspection"})
 public class BorrowView extends JFrame {
 
     private static BorrowView instance;
@@ -109,7 +109,7 @@ public class BorrowView extends JFrame {
         borrowDaysPanel.add(borrowDaysLabel);
 
         BorrowBuilder builder = BorrowBuilder.getInstance();
-        daysToBorrow = new JComboBox ();
+        daysToBorrow = new JComboBox<>();
         for (int i: builder.getAllowedDays()) {
             daysToBorrow.addItem(i);
         }
@@ -142,12 +142,12 @@ public class BorrowView extends JFrame {
         submitButton = new JButton();
         submitButton.setText(SUBMIT);
         actionPanel.add(submitButton);
-        this.submitButton.addActionListener( e -> { submit(); });
+        this.submitButton.addActionListener( e -> submit());
 
         clearButton = new JButton();
         clearButton.setText(CLEAR);
         actionPanel.add(clearButton);
-        this.clearButton.addActionListener( e -> { clear(); });
+        this.clearButton.addActionListener( e -> clear());
     }
 
     public static BorrowView getInstance() {
@@ -157,59 +157,59 @@ public class BorrowView extends JFrame {
         return instance;
     }
 
+    /**
+     * When the Clear button is pressed, this method resets the form.
+     */
     private void clear () {
         this.bookIdField.setText("");
         this.borrowerIdField.setText("");
         this.borrowDateField.setText("");
-        //borrowDays
+        this.daysToBorrow.setSelectedIndex(0);
+        this.requestConfirmationCheck.setSelected(false);
         this.commentArea.setText("");
     }
 
+    /**
+     * When the Submit button is pressed, this method takes all the parameters and pass them to the BorrowBuilder.
+     * If the requestConfirmation check is checked, a message will be displayed before creating the Borrow.
+     * After creating the Borrow, a message will be displayed.
+     */
     private void submit() {
         LOGGER.fine("About to submit form.");
         BorrowBuilder builder = BorrowBuilder.getInstance();
         try {
+            int input = 0;
             if (requestConfirmationCheck.isSelected()) {
                 LOGGER.fine("About to borrow book with confirmation.");
-                int input = JOptionPane.showConfirmDialog(
+                input = JOptionPane.showConfirmDialog(
                         null,
                         "Do you want to borrow this book?",
                         "Borrow confirmation",
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE
                 );
-                if (input == 0) {
-                    LOGGER.info("Borrow has been confirmed.");
-                    Borrow borrow = builder.build(new String[] {
-                            this.bookIdField.getText(),
-                            this.borrowerIdField.getText(),
-                            this.borrowDateField.getText(),
-                            "1",
-                            this.commentArea.getText()
-                    });
-                    LOGGER.info(
-                            String.format(
-                                    "A new book has been borrowed --> %s",
-                                    borrow.toString()
-                            )
-                    );
-                } else {
-                    LOGGER.info("Borrow has been cancelled.");
-                }
-            } else {
-                LOGGER.fine("About to borrow book without confirmation.");
+            }
+            if (input == 0) {
+                LOGGER.fine("About to borrow book confirmation.");
                 Borrow borrow = builder.build(new String[] {
                         this.bookIdField.getText(),
                         this.borrowerIdField.getText(),
                         this.borrowDateField.getText(),
-                        "1",
+                        (this.daysToBorrow != null && this.daysToBorrow.getSelectedItem() != null)?
+                                this.daysToBorrow.getSelectedItem().toString() : "1",
                         this.commentArea.getText()
                 });
                 LOGGER.info(
                         String.format(
                                 "A new book has been borrowed --> %s",
-                                borrow.toString()
+                                (borrow != null )? borrow.toString() : ""
                         )
+                );
+                JOptionPane.showMessageDialog(
+                        null,
+                        (borrow != null)? borrow.toString() : "",
+                        "A new book has been borrowed.",
+                        JOptionPane.INFORMATION_MESSAGE
                 );
             }
         } catch (IllegalArgumentException ex) {

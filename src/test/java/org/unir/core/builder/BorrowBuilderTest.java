@@ -1,6 +1,5 @@
 package org.unir.core.builder;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,12 +7,10 @@ import org.unir.core.dto.Borrow;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Calendar;
 
 public class BorrowBuilderTest {
 
     private BorrowBuilder builder;
-    String[] args = new String[] {"bookId", "borrowerID", "01/01/2000", "1", "No comments."};
 
     @BeforeEach
     public void setUp() {
@@ -92,30 +89,31 @@ public class BorrowBuilderTest {
         Borrow borrow = builder.build(new String[] {"bookId", "borrowerID", "01/01/2000", "1", "No comments."});
         LocalDate startDate = borrow.getBorrowDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate endDate = borrow.getBorrowEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        Assert.assertEquals(startDate.until(endDate).getDays(), 1);
+        Assertions.assertEquals(startDate.until(endDate).getDays(), 1);
         borrow = builder.build(new String[] {"bookId", "borrowerID", "01/01/2000", "2", "No comments."});
         startDate = borrow.getBorrowDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         endDate = borrow.getBorrowEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        Assert.assertEquals(startDate.until(endDate).getDays(), 2);
+        Assertions.assertEquals(startDate.until(endDate).getDays(), 2);
         borrow = builder.build(new String[] {"bookId", "borrowerID", "01/01/2000", "4", "No comments."});
         startDate = borrow.getBorrowDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         endDate = borrow.getBorrowEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        Assert.assertEquals(startDate.until(endDate).getDays(), 4);
+        Assertions.assertEquals(startDate.until(endDate).getDays(), 4);
         borrow = builder.build(new String[] {"bookId", "borrowerID", "01/01/2000", "8", "No comments."});
         startDate = borrow.getBorrowDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         endDate = borrow.getBorrowEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        Assert.assertEquals(startDate.until(endDate).getDays(), 8);
+        Assertions.assertEquals(startDate.until(endDate).getDays(), 8);
         borrow = builder.build(new String[] {"bookId", "borrowerID", "01/01/2000", "30", "No comments."});
         startDate = borrow.getBorrowDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         endDate = borrow.getBorrowEndDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        Assert.assertEquals(startDate.until(endDate).getDays(), 30);
+        Assertions.assertEquals(startDate.until(endDate).getDays(), 30);
     }
 
+    @SuppressWarnings("ArrayHashCode")
     @Test
     public void cloneArrayTest () {
         int[] str1 = builder.getAllowedDays();
         int[] str2 = builder.getAllowedDays();
-        Assert.assertEquals(str1.length, str2.length);
-        Assert.assertNotEquals(str1.hashCode(), str2.hashCode());
+        Assertions.assertEquals(str1.length, str2.length);
+        Assertions.assertNotEquals(str1.hashCode(), str2.hashCode());
     }
 }

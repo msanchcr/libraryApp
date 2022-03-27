@@ -1,13 +1,12 @@
 package org.unir;
 
-/**
- * Hello world!
- *
- */
+import org.unir.view.BorrowView;
+
 public class App 
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        BorrowView view = BorrowView.getInstance();
+        view.setVisible(true);
     }
 }
