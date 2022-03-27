@@ -157,14 +157,23 @@ public class BorrowView extends JFrame {
         return instance;
     }
 
+    /**
+     * When the Clear button is pressed, this method resets the form.
+     */
     private void clear () {
         this.bookIdField.setText("");
         this.borrowerIdField.setText("");
         this.borrowDateField.setText("");
-        //borrowDays
+        this.daysToBorrow.setSelectedIndex(0);
+        this.requestConfirmationCheck.setSelected(false);
         this.commentArea.setText("");
     }
 
+    /**
+     * When the Submit button is pressed, this method takes all the parameters and pass them to the BorrowBuilder.
+     * If the requestConfirmation check is checked, a message will be displayed before creating the Borrow.
+     * After creating the Borrow, a message will be displayed.
+     */
     private void submit() {
         LOGGER.fine("About to submit form.");
         BorrowBuilder builder = BorrowBuilder.getInstance();
@@ -186,18 +195,19 @@ public class BorrowView extends JFrame {
                         this.bookIdField.getText(),
                         this.borrowerIdField.getText(),
                         this.borrowDateField.getText(),
-                        "1",
+                        (this.daysToBorrow != null && this.daysToBorrow.getSelectedItem() != null)?
+                                this.daysToBorrow.getSelectedItem().toString() : "1",
                         this.commentArea.getText()
                 });
                 LOGGER.info(
                         String.format(
                                 "A new book has been borrowed --> %s",
-                                borrow.toString()
+                                (borrow != null )? borrow.toString() : ""
                         )
                 );
                 JOptionPane.showMessageDialog(
                         null,
-                        borrow.toString(),
+                        (borrow != null)? borrow.toString() : "",
                         "A new book has been borrowed.",
                         JOptionPane.INFORMATION_MESSAGE
                 );
