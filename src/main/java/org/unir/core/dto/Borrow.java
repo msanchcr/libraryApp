@@ -3,6 +3,7 @@ package org.unir.core.dto;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+@SuppressWarnings("unused")
 public class Borrow {
 
     private final static String NO_COMMENT = "No comment";
