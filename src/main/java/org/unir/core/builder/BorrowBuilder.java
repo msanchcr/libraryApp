@@ -20,6 +20,22 @@ public class BorrowBuilder {
 
     private static BorrowBuilder instance;
 
+    /**
+     * Main method of this builder. It receives the parameters from the view, in a String[], validates them and,
+     * if they are all correct, it creates a Borrow and return it.
+     * The validations include:
+     *  1.- 5 arguments may be received.
+     *  2.- 1st argument is the book id. It should match regular expression [a-zA-Z]+.
+     *  3.- 2nd argument is the borrower id. It should match regular expression [a-zA-Z]+.
+     *  4.- 3rd argument is the date whe the book will be borrowed. It should be written as dd/MM/yyyy.
+     *  5.- 4th argument is the number of days the book will be borrowed. See getAllowedDays() for more information
+     *  about the number of days a book can be borrowed.
+     *  6.- 5th argument is the comment.
+     *
+     * @param args The parameters in order to create the Borrow.
+     * @return The created Borrow.
+     * @throws IllegalArgumentException if any validation is not succed, this exception iw thrown.
+     */
     public Borrow build(String[] args) throws IllegalArgumentException {
         Borrow borrow = null;
         Date borrowDate = null;
@@ -100,6 +116,11 @@ public class BorrowBuilder {
         return borrow;
     }
 
+    /**
+     * This class uses singleton, this method gets the instance of the builder.
+     *
+     * @return the instance of the builder.
+     */
     public static BorrowBuilder getInstance() {
         if (instance == null) {
             instance = new BorrowBuilder();
@@ -107,6 +128,11 @@ public class BorrowBuilder {
         return instance;
     }
 
+    /**
+     * This method retruns an int[] with all the allowed days tah a book can be borrowed.
+     *
+     * @return the array with the allowed borrow days.
+     */
     public int[] getAllowedDays () {
         return allowedBorrowDates.clone();
     }
