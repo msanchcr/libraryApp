@@ -208,7 +208,16 @@ public class BorrowView extends JFrame {
                 JOptionPane.showMessageDialog(
                         null,
                         (borrow != null)? borrow.toString() : "",
-                        "A new book has been borrowed.",
+                        "SUCCESS",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+            } else {
+                String message = "The proccedure to borrow a book has been cancelled.";
+                LOGGER.info(message);
+                JOptionPane.showMessageDialog(
+                        null,
+                        message,
+                        "CANCELLED",
                         JOptionPane.INFORMATION_MESSAGE
                 );
             }
@@ -217,7 +226,14 @@ public class BorrowView extends JFrame {
                     String.format(
                             "An error occurred while building new borrow --> %s",
                             ex.getMessage()
-                    ));
+                    )
+            );
+            JOptionPane.showMessageDialog(
+                    null,
+                    (ex != null)? ex.getMessage(): "Generic error",
+                    "ERROR",
+                    JOptionPane.ERROR_MESSAGE
+            );
         }
     }
 }
